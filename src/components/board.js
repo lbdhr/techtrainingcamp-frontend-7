@@ -1,0 +1,41 @@
+class Board {
+  constructor({ size = 4, board }) {
+    this.size = size;
+    this.board = board ? board : [];
+    if (!this.board.length) {
+      this.initBoard();
+      this.generateRandom(this.board);
+      this.generateRandom(this.board);
+    }
+  }
+
+  // 初始化矩阵方法
+  initBoard() {
+    for (let i = 0; i < this.size; i++) {
+      this.board[i] = [];
+      for (let j = 0; j < this.size; j++) {
+        this.board[i][j] = {
+          number: 0,
+          x: -1,
+          y: -1,
+        };
+      }
+    }
+  }
+
+  //生成随机数方法(更新数组number和位置)
+  generateRandom(board) {
+    // 1.随机生成一个位置
+    let randx = parseInt(Math.floor(Math.random() * board.length - 1));
+    let randy = parseInt(Math.floor(Math.random() * board.length - 1));
+    while (true) {
+      if (board[randx][randy].number === 0) break;
+      // 否则重新生成一个位置
+      randx = parseInt(Math.floor(Math.random() * board.length - 1));
+      randy = parseInt(Math.floor(Math.random() * board.length - 1));
+    }
+    // 2.随机生成一个随机数字
+    let randNumber = Math.random() < 0.5 ? 2 : 4;
+    board[randx][randy].number = randNumber;
+  }
+}
