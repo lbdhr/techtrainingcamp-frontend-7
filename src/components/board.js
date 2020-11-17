@@ -9,7 +9,7 @@ class Board {
     }
   }
 
-  // 初始化矩阵方法
+  // 初始化矩阵
   initBoard() {
     for (let i = 0; i < this.size; i++) {
       this.board[i] = [];
@@ -23,7 +23,7 @@ class Board {
     }
   }
 
-  //生成随机数方法(更新数组number和位置)
+  //生成随机数(更新数组number和位置)
   generateRandom(board) {
     // 1.随机生成一个位置
     let randx = parseInt(Math.floor(Math.random() * board.length - 1));
@@ -38,4 +38,22 @@ class Board {
     let randNumber = Math.random() < 0.5 ? 2 : 4;
     board[randx][randy].number = randNumber;
   }
+
+  //按照move方向移动数组
+  moveBoard(move) {
+    switch (move) {
+      case 38:
+        break;
+      case 40:
+        break;
+      case 37:
+        break;
+      case 39:
+        break;
+      default:
+        break;
+    }
+  }
 }
+
+export default Board;
