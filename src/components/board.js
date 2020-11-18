@@ -14,11 +14,7 @@ class Board {
     for (let i = 0; i < this.size; i++) {
       this.board[i] = [];
       for (let j = 0; j < this.size; j++) {
-        this.board[i][j] = {
-          number: 0,
-          x: -1,
-          y: -1,
-        };
+        this.board[i][j] = 0;
       }
     }
   }
@@ -29,26 +25,26 @@ class Board {
     let randx = parseInt(Math.floor(Math.random() * board.length - 1));
     let randy = parseInt(Math.floor(Math.random() * board.length - 1));
     while (true) {
-      if (board[randx][randy].number === 0) break;
+      if (board[randx][randy] === 0) break;
       // 否则重新生成一个位置
       randx = parseInt(Math.floor(Math.random() * board.length - 1));
       randy = parseInt(Math.floor(Math.random() * board.length - 1));
     }
     // 2.随机生成一个随机数字
     let randNumber = Math.random() < 0.5 ? 2 : 4;
-    board[randx][randy].number = randNumber;
+    board[randx][randy] = randNumber;
   }
 
   //按照move方向移动数组
   moveBoard(move) {
     switch (move) {
-      case 38:
+      case 38: // 上
         break;
-      case 40:
+      case 40: // 下
         break;
-      case 37:
+      case 37: // 左
         break;
-      case 39:
+      case 39: // 右
         break;
       default:
         break;
