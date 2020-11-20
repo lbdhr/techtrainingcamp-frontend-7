@@ -40,8 +40,8 @@ function Main() {
           score : <span id="score">0</span>
         </p>
       </header>
-      <GridContainer board={board.initBoard()} />
-      <NumberContainer board={board} />
+      <GridContainer board={board.board} />
+      <NumberContainer board={board.board} />
       <div style={{ width: '500px', margin: '10px auto', textAlign: 'center' }}>
         请使用键盘上的上、下、左、右的按键进行游戏。
       </div>

@@ -13,6 +13,7 @@ export default class Board {
     this.board = [];
     this.score = 0;
     this.flag = []; // 存储true/false判断每个点是否已经移动过
+    this.initBoard();
   }
   initBoard() {
     for (let i = 0; i < this.size; i++) {
