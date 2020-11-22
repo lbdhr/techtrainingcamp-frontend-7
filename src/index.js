@@ -4,6 +4,8 @@ import './index.css';
 import Main from './Main';
 import reportWebVitals from './reportWebVitals';
 
+// import Test from './test';
+
 ReactDOM.render(
   <React.StrictMode>
     <Main />

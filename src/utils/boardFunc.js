@@ -26,7 +26,6 @@ export default class Board {
     }
     this.getRandom();
     this.getRandom();
-    return this.board;
   }
 
   getRandom() {
@@ -76,6 +75,7 @@ export default class Board {
     }
     this.initFlag();
     this.getRandom();
+    return this;
   }
 
   moveRight() {
@@ -111,6 +111,7 @@ export default class Board {
     }
     this.initFlag();
     this.getRandom();
+    return this;
   }
 
   moveUp() {
@@ -146,6 +147,7 @@ export default class Board {
     }
     this.initFlag();
     this.getRandom();
+    return this;
   }
 
   moveDown() {
@@ -177,6 +179,7 @@ export default class Board {
     }
     this.initFlag();
     this.getRandom();
+    return this;
   }
 
   // flag数组初始化

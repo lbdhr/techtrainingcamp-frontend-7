@@ -1,7 +1,7 @@
 .grid-container {
-  width: 440px;
-  height: 440px;
-  margin: 50px auto;
+  width: 400px;
+  height: 400px;
+  margin: 10px auto;
   padding: 5px;
   background-color: #bbada0;
   border-radius: 10px;
@@ -13,8 +13,8 @@
   order: 1;
 }
 .grid-cell {
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   margin: 5px;
   line-height: 90px;
   display: inline-block;
@@ -24,4 +24,22 @@
   vertical-align: middle;
   border-radius: 7px;
   background-color: #ccc0b3;
+}
+.number-cell {
+  width: 90px;
+  height: 90px;
+  margin: 5px;
+  line-height: 90px;
+  display: inline-block;
+  font-size: 55px;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 7px;
+  color: #fff;
+  position: absolute;
+  font-weight: bold;
+  background-color: black;
+  z-index: 999;
+  /*-webkit-transition:all 5s ease-in-out;*/
 }
