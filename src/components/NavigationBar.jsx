@@ -12,15 +12,18 @@ class NavigationBar extends React.Component {
 
     render() {
         
-        const { isAuthenticated } = this.props.auth;
+        const { isAuthenticated, user } = this.props.auth;
 
         const userLinks = (
             <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                    <a className="nav-link" onClick={ this.logout.bind(this) }>退出</a>
+                    <Link className="nav-link">{`欢迎您: ${user.username}`}</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" to="/game">个人中心</Link>
+                    <Link className="nav-link" onClick={ this.logout.bind(this) }>退出</Link>
+                </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to="/game">对战模式</Link>
                 </li>
             </ul>
         )
@@ -32,9 +35,6 @@ class NavigationBar extends React.Component {
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" to="/login">登录</Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link" to="/game">进入游戏</Link>
                 </li>
             </ul>
         )
@@ -58,7 +58,8 @@ class NavigationBar extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        user: state.user
     }
 }
 

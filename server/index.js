@@ -4,6 +4,7 @@ const users = require("./routes/users")
 const debug = require("debug")("my-application");
 const bodyParser = require("body-parser")
 const auth = require("./routes/auth")
+const defaultRouter = require('./routes/defaultRoute')
 
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
@@ -13,6 +14,8 @@ const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/rooms'
 app.use(bodyParser.json());
 app.use("/api/users",users);
 app.use("/api/auth",auth);
+app.use(cors);
+app.use('/', defaultRouter);
 
 //以下都是socket.io收到连接后的处理代码
 io.on('connection',(socket)=>{

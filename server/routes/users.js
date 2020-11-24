@@ -34,8 +34,8 @@ const validatorInput = (data) =>{
 router.post("/",(req,res) =>{
     const { errors,isValid } = validatorInput(req.body);
     // 接受数据库语句
-    var sql = "insert into user values (null,?,?,?,?)";
-    var arr = [req.body.email,req.body.username,req.body.password,req.body.passwordConfirmation];
+    var sql = "insert into user values (null,?,?,?,?,?,?)";
+    var arr = [req.body.email,req.body.username,req.body.password,req.body.passwordConfirmation,0,0];
     if(isValid){
         sqlFn(sql,arr,function(data){
             if(data.affectedRows){
@@ -51,6 +51,7 @@ router.post("/",(req,res) =>{
 
 router.get("/:username",(req,res) =>{
     var sql = "select * from user where `username`=?";
+    console.log(sql);
     var arr = [req.params.username];
     sqlFn(sql,arr,function(data){
         if(data){

@@ -42,6 +42,7 @@ class SignupForm extends React.Component{
     }
 
     checkUserExists = (e) =>{
+        e.preventDefault();
         const field = e.target.name;
         const val = e.target.value;
         let invalid;
@@ -49,14 +50,20 @@ class SignupForm extends React.Component{
             this.props.signupActions.isUserExists(val).then(res =>{
                 let errors = this.state.errors;
                 if(res.data[0]){
-                    errors[field] = "用户名存在:" + field;
+                    errors[field] = "用户名存在: " + val;
                     invalid = true;
                 }else{
                     errors[field] = ""
                     invalid = false;
                 }
                 this.setState({errors,invalid})
-            })
+            });
+
+            // // 跳过验证
+            // let errors = this.state.errors;
+            // errors[field] = ""
+            // invalid = false;
+            // this.setState({errors, invalid})
         }
     }
 
