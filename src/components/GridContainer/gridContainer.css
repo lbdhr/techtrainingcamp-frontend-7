@@ -1,6 +1,6 @@
 .grid-container {
-  width: 400px;
-  height: 400px;
+  width: 410px;
+  height: 410px;
   margin: 10px auto;
   padding: 5px;
   background-color: #bbada0;
@@ -31,7 +31,6 @@
   margin: 5px;
   line-height: 90px;
   display: inline-block;
-  font-size: 55px;
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
@@ -39,7 +38,4 @@
   color: #fff;
   position: absolute;
   font-weight: bold;
-  background-color: black;
-  z-index: 999;
-  /*-webkit-transition:all 5s ease-in-out;*/
 }
