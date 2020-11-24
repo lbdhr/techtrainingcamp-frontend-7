@@ -30,27 +30,28 @@ if(localStorage.jwtToken){
 
 
 // import Test from './test';
-
-ReactDOM.render(
-  <Provider store={ store }>
-      <Router routes={ routes }>
-          <NavigationBar />
-          <FlashMessagesList />
-          { routes }
-      </Router>
-  </Provider>
-  , 
-  document.getElementById('root'));
+// 这里是加入登陆验证的页面布置
+// ReactDOM.render(
+//   <Provider store={ store }>
+//       <Router routes={ routes }>
+//           <NavigationBar />
+//           <FlashMessagesList />
+//           { routes }
+//       </Router>
+//   </Provider>
+//   ,
+//   document.getElementById('root'));
 
 // import './index.css';
 // import reportWebVitals from './reportWebVitals';
 
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <Main />
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );
+// 这里是直接棋盘的页面
+ReactDOM.render(
+  <React.StrictMode>
+    <Main />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 
 // // If you want to start measuring performance in your app, pass a function
 // // to log results (for example: reportWebVitals(console.log))
