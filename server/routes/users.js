@@ -51,13 +51,26 @@ router.post("/",(req,res) =>{
 
 router.get("/:username",(req,res) =>{
     var sql = "select * from user where `username`=?";
-    console.log(sql);
+    // console.log(sql);
     var arr = [req.params.username];
     sqlFn(sql,arr,function(data){
         if(data){
             res.send(data)
         }else{
             res.send({})
+        }
+    })
+})
+
+router.get("/usercenter/rankings", (req, res) => {
+    let sql = "select * from `user`";
+    // console.log(sql);
+    let arr = [];
+    sqlFn(sql, arr, function(data){
+        if(data){
+            res.send(data);
+        } else {
+            res.send({});
         }
     })
 })

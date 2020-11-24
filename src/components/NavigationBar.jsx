@@ -17,7 +17,7 @@ class NavigationBar extends React.Component {
         const userLinks = (
             <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                    <Link className="nav-link">{`欢迎您: ${user.username}`}</Link>
+                    <Link className="nav-link" to="/rankings">{`个人中心[${user.username}]`}</Link>
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" onClick={ this.logout.bind(this) }>退出</Link>
