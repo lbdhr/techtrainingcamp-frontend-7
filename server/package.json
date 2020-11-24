@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "classnames": "^2.2.6",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.6",
     "jsonwebtoken": "^8.5.1",
@@ -21,6 +22,7 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "shortid": "^2.2.16",
+    "socket.io": "^3.0.3",
     "validator": "^11.1.0"
   }
 }

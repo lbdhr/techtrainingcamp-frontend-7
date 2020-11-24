@@ -40,3 +40,14 @@ export const cellColor = number => {
       return;
   }
 };
+export const fontSize = number => {
+  if (number < 10) {
+    return '55px';
+  } else if (number < 100) {
+    return '50px';
+  } else if (number < 1000) {
+    return '45px';
+  } else if (number >= 1000) {
+    return '40px';
+  }
+};

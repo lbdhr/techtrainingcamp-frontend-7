@@ -1,6 +1,6 @@
 import React from 'react';
 import './gridContainer.css';
-import { cellBackgroundColor, cellColor } from './cellColor';
+import { cellBackgroundColor, cellColor, fontSize } from './cellColor';
 
 // 1.获得每个点的定位
 const cellSpace = 5;
@@ -20,6 +20,7 @@ function GridContainer(props) {
               left: getPosition(colIndex) + 'px',
               backgroundColor: cellBackgroundColor(col),
               color: cellColor(col),
+              fontSize: fontSize(col),
             };
             return (
               <>
