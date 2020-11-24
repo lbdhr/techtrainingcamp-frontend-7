@@ -20,6 +20,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "redux-undo": "^1.0.0-beta9-9-7",
     "shortid": "^2.2.16",
     "validator": "^13.1.17",
     "web-vitals": "^0.2.4"
