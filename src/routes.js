@@ -5,6 +5,7 @@ import SignupPage from "./components/signup/SignupPage"
 import LoginPage from "./components/login/LoginPage"
 import OfflineGame from "./components/userCenter/OfflineGame"
 import Rankings from "./components/userCenter/ranking/RankingList"
+import JoinRoom from "./components/userCenter/onlineGame/JoinRoom"
 
 import requireAuth from "./utils/requireAuth"
 
@@ -14,6 +15,7 @@ export default(
         <Route path="/signup" component={ SignupPage }></Route>
         <Route path="/login" component={ LoginPage }></Route>
         <Route path="/offlinegame" component={ requireAuth(OfflineGame) }></Route>
+        <Route path="/onlinegame" component={ requireAuth(JoinRoom) }></Route>
         <Route path="/rankings" component={ requireAuth(Rankings) }></Route>
     </div>
 )
