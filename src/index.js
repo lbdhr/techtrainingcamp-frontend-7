@@ -21,36 +21,43 @@ import jwtDecode from 'jwt-decode';
 
 import Main from './pages/Main';
 import gameStore from './gameReducers/gameStore';
-
-// const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger, thunk)))
-
-// if(localStorage.jwtToken){
-//   setAuthorizationToken(localStorage.jwtToken);
-//   store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));
-// }
-
-// ReactDOM.render(
-//   <Provider store={ store }>
-//       <Router routes={ routes }>
-//           <NavigationBar />
-//           <FlashMessagesList />
-//           { routes }
-//       </Router>
-//   </Provider>
-//   ,
-//   document.getElementById('root'));
-
 import './index.css';
-// import reportWebVitals from './reportWebVitals';
+
+// 接入服务器及注册登录部分
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger, thunk)))
+
+if(localStorage.jwtToken){
+  setAuthorizationToken(localStorage.jwtToken);
+  store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={gameStore}>
-      <Main />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+  <Provider store={ store }>
+      <Router routes={ routes }>
+          <NavigationBar />
+          <FlashMessagesList />
+          { routes }
+      </Router>
+  </Provider>
+  ,
+  document.getElementById('root'));
+
+
+// 2048游戏部分
+// import reportWebVitals from './reportWebVitals';
+
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <Provider store={gameStore}>
+//       <Main />
+//     </Provider>
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );
+
+
+
+// long long ago部分
 
 // import Test from './test';
 // 这里是加入登陆验证的页面布置
