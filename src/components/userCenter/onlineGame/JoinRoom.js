@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from "react-redux"
 import { Link } from "react-router-dom";
-import SignupForm from "../../signup/SignupForm";
 import classnames from "classnames";
 
 
 const JoinRoom = (props) => {
         // const [name, setName] = useState('');
         const [room, setRoom] = useState('');
+        const [inputNull, setInputNull] = useState(false)
         return (
             <div className="row">
                 <div className="col-md-3"></div>
@@ -21,7 +21,10 @@ const JoinRoom = (props) => {
                         </div>
                         <div className="form-group">
                             <label className="control-label">房间名</label>
-                            <input type="text" name="username" className="form-control" onChange={(event) => setRoom(event.target.value)}  />
+                            <input type="text" name="username" onChange={(event) => setRoom(event.target.value)}
+                                   className={ classnames('form-control',{ 'is-invalid': inputNull }) }
+                            />
+                            { inputNull && <span className="form-text text-muted">请输入房间名</span> }
                         </div>
                         <div className="form-group">
                             <Link onClick={e => !room ? e.preventDefault() : null} to={`/onlinegame?name=${props.auth.user.username}&room=${room}`}>

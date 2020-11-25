@@ -26,7 +26,7 @@ class NavigationBar extends React.Component {
                     <Link className="nav-link" to="/offlinegame">单机模式</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" to="/onlinegame">对战模式</Link>
+                    <Link className="nav-link" to="/joinroom">对战模式</Link>
                 </li>
             </ul>
         )
