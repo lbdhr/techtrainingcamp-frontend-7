@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { SET_USER_INFO } from "../constants";
+import { ADD_USER_ONLINE_INFO } from '../constants'
 
 export const getUserInfo = () =>{
     return dispatch =>{
@@ -11,6 +12,13 @@ export const getUserInfo = () =>{
 export const setUserInfo = (message) => {
     return {
         type: SET_USER_INFO,
+        message
+    }
+}
+
+export const addUserOnlineInfo = (message) => {
+    return {
+        type: ADD_USER_ONLINE_INFO,
         message
     }
 }

@@ -6,7 +6,7 @@ import Ranking from './Ranking'
 
 class RankingList extends React.Component{
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.getUserInfo().then(res => {
             this.props.setUserInfo(res.data)
         })

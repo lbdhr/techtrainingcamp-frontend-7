@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import queryString from 'query-string';
 import io from "socket.io-client";
+import { connect } from 'react-redux'
 
 const ENDPOINT = 'http://localhost:3030/';
 
 let socket;
 
-const OnlineGame = ({ location }) => {
+const OnlineGame = (props) => {
     const [name, setName] = useState('');
     const [room, setRoom] = useState('');
     const [users, setUsers] = useState('');
@@ -14,8 +15,9 @@ const OnlineGame = ({ location }) => {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-        const { name, room } = queryString.parse(location.search);
-        console.log(name)
+        const { name, room } = props;
+        // console.log(name)
+        // console.log(room)
         socket = io(ENDPOINT);
 
         setRoom(room);
@@ -26,7 +28,7 @@ const OnlineGame = ({ location }) => {
                 alert(error);
             }
         });
-    }, [ENDPOINT, location.search]);
+    }, [ENDPOINT, name, room]);
 
     useEffect(() => {
         socket.on('message', message => {
@@ -55,4 +57,11 @@ const OnlineGame = ({ location }) => {
     );
 }
 
-export default OnlineGame;
+const mapStateToProps = (state) => {
+    return {
+        name: state.onlineGameInfo.username,
+        room: state.onlineGameInfo.room
+    }
+}
+
+export default connect(mapStateToProps, null)(OnlineGame);
