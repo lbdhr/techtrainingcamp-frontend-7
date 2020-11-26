@@ -5,7 +5,6 @@ const initState = {
     room: "",
     score: "",
     board: [],
-    chatting: []
 }
 
 const onlineGameInfo =  (state=initState, action={}) => {
@@ -16,7 +15,6 @@ const onlineGameInfo =  (state=initState, action={}) => {
                 room: action.message.room,
                 score: action.message.score,
                 board: action.message.board,
-                chatting: [...state.chatting, action.message.chatting]
             }
         default:
             return state;
