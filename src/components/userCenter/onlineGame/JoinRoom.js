@@ -40,9 +40,9 @@ const JoinRoom = (props) => {
                             { inputNull && <span className="form-text text-muted">请输入房间名</span> }
                         </div>
                         <div className="form-group">
-                            <Link onClick={e => !room ? setInputNull(true) : onChange(room)} >{/*to={`/onlinegame?name=${props.auth.user.username}&room=${room}`}>*/}
+                            <a onClick={e => !room ? setInputNull(true) : onChange(room)} >{/*to={`/onlinegame?name=${props.auth.user.username}&room=${room}`}>*/}
                                 <button className="btn btn-primary btn-lg">前往游戏！</button>
-                            </Link>
+                            </a>
                         </div>
                     </form>
                 </div>

@@ -20,7 +20,7 @@ class NavigationBar extends React.Component {
                     <Link className="nav-link" to="/rankings">{`个人中心[${user.username}]`}</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" onClick={ this.logout.bind(this) }>退出</Link>
+                    <a className="nav-link" onClick={ this.logout.bind(this) }>退出</a>
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" to="/offlinegame">单机模式</Link>
