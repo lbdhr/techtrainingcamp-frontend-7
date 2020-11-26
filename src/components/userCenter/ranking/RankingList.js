@@ -28,8 +28,8 @@ class RankingList extends React.Component{
         // )
 
         return (
-            <div className="outerContainer">
-                <div className="container">
+            <div>
+                <div>
                     <h3>对战模式积分榜</h3>
                     <table class="table table-hover">
                         <tr>

@@ -1,6 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import io from "socket.io-client";
 import { connect } from 'react-redux'
+
+import TextContainer from './TextContainer/TextContainer';
+import Messages from './Messages/Messages';
+import InfoBar from './InfoBar/InfoBar';
+import Input from './Input/Input';
+
+// import './OnlineGame.css'
+
 
 const ENDPOINT = 'http://localhost:3030/';
 
@@ -12,32 +20,6 @@ class OnlineGame extends React.Component {
     // const [users, setUsers] = useState('');
     // const [message, setMessage] = useState('');
     // const [messages, setMessages] = useState([]);
-
-    // useEffect(() => {
-    //     const { name, room } = props;
-    //     // console.log(name)
-    //     // console.log(room)
-    //     socket = io(ENDPOINT);
-    //
-    //     setRoom(room);
-    //     setName(name);
-    //
-    //     socket.emit('join', { name, room }, (error) => {
-    //         if(error) {
-    //             alert(error);
-    //         }
-    //     });
-    // }, [ENDPOINT, name, room]);
-    //
-    // useEffect(() => {
-    //     socket.on('message', message => {
-    //         setMessages(messages => [ ...messages, message ]);
-    //     });
-    //
-    //     socket.on("roomData", ({ users }) => {
-    //         setUsers(users);
-    //     });
-    // }, []);
     //
     // const sendMessage = (event) => {
     //     event.preventDefault();
@@ -46,6 +28,14 @@ class OnlineGame extends React.Component {
     //         socket.emit('sendMessage', message, () => setMessage(''));
     //     }
     // }
+    constructor(props) {
+        super(props);
+        this.state = {
+            chattings: [],
+            roomData: ""
+        };
+    }
+
     componentDidMount() {
         const { name, room } = this.props;
         socket = io(ENDPOINT);
@@ -54,17 +44,41 @@ class OnlineGame extends React.Component {
                 alert(error);
             }
         });
+
+        socket.on('message', message => {
+            this.setState({
+                chattings: [...this.state.chattings, message]
+            })
+        });
+
+        socket.on("roomData", ({users}) => {
+            this.setState({
+                roomData: users
+            })
+        });
     }
 
     componentWillUnmount() {
         socket.disconnect();
     }
 
+    clickChange = (message) => {
+        if(message) {
+            socket.emit('sendMessage', message, ()=>{});
+        }
+    }
+
     render() {
         return (
-            <div className="outerContainer">
-                <div className="container">
-                    <label>房间名: {this.props.room}</label>
+            <div class="row">
+                <div className="col-md-6">
+                    <InfoBar room={this.props.room}/>
+                    <Messages messages={this.state.chattings} name={this.props.name}/>
+                    <Input sendMessage={this.clickChange} />
+                    <TextContainer users={this.state.roomData}/>
+                </div>
+                <div className="col-md-6">
+                    这里放上棋盘组件
                 </div>
             </div>
         );
