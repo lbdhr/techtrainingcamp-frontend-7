@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import { initBoard } from '../../gameReducers/reducer';
+import { initBoard } from '../../reducers/gameReducer';
 import Main from './Main';
 
 const mapStateToProps = state => ({
-  board: state.present.board,
-  score: state.present.score,
-  bestScore: state.present.bestScore,
-  state: state,
+  board: state.present.gameReducer.board,
+  score: state.present.gameReducer.score,
+  bestScore: state.present.gameReducer.bestScore,
+  state: state.present.gameReducer,
 });
 
 const mapDispatchToProps = {

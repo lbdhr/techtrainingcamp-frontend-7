@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
-import { reset } from '../../gameReducers/reducer';
+import { reset } from '../../reducers/gameReducer';
 import Button from './Button';
 
 const mapStateToProps = state => ({
-  board: state.present.board,
-  score: state.present.score,
-  bestScore: state.present.bestScore,
+  board: state.present.gameReducer.board,
+  score: state.present.gameReducer.score,
+  bestScore: state.present.gameReducer.bestScore,
   recordLength: state.past.length,
 });
 const mapDispatchToProps = {

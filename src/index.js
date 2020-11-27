@@ -18,13 +18,30 @@ import FlashMessagesList from './components/flash/FlashMessagesList';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import { setCurrentUser } from './actions/login';
 import jwtDecode from 'jwt-decode';
+import undoable from 'redux-undo';
 
-import Main from './pages/Main';
-import gameStore from './gameReducers/gameStore';
+// import Main from './pages/Main';
+// import gameStore from './gameReducers/gameStore';
 import './index.css';
 
+const initHistory = JSON.parse(localStorage.getItem('state') || 'null');
+const args = [
+    undoable(rootReducer, {
+        ignoreInitialState: true,
+        limit: 11,
+    }),
+];
+if (initHistory) {
+    args.push(initHistory);
+}
+
 // 接入服务器及注册登录部分
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger, thunk)))
+const store = createStore(...args, composeWithDevTools(applyMiddleware(logger, thunk)))
+store.subscribe(() => {
+    const state = store.getState();
+    localStorage.setItem('state', JSON.stringify(state));
+});
+
 
 if(localStorage.jwtToken){
   setAuthorizationToken(localStorage.jwtToken);

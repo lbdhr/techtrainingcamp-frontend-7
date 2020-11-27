@@ -61,8 +61,8 @@ class NavigationBar extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.auth,
-        user: state.user
+        auth: state.present.auth,
+        user: state.present.user
     }
 }
 
