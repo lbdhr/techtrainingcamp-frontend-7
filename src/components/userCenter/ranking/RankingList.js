@@ -59,7 +59,7 @@ class RankingList extends React.Component{
 
 const mapStateToProps = (state) => {
     return {
-        message: state.userInfo
+        message: state.present.userInfo
     }
 }
 

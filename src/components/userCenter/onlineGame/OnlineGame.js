@@ -88,8 +88,8 @@ class OnlineGame extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        name: state.onlineGameInfo.username,
-        room: state.onlineGameInfo.room
+        name: state.present.onlineGameInfo.username,
+        room: state.present.onlineGameInfo.room
     }
 }
 
