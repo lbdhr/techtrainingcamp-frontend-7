@@ -6,6 +6,7 @@ const mapStateToProps = state => ({
   board: state.present.board,
   score: state.present.score,
   bestScore: state.present.bestScore,
+  state: state,
 });
 
 const mapDispatchToProps = {

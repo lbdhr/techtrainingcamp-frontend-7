@@ -7,6 +7,7 @@ import Controller from '../../components/Controller';
 export default function Main(props) {
   useEffect(() => {
     initBoard();
+    console.log(props);
   }, []);
 
   const initBoard = () => {

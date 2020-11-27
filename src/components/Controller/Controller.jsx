@@ -4,7 +4,6 @@ export default function Controller(props) {
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown, false);
     window.addEventListener('keyup', handleKeyUp, false);
-    console.log(props.board);
     return () => {
       window.removeEventListener('keydown', handleKeyDown, false);
       window.removeEventListener('keyup', handleKeyUp, false);

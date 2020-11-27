@@ -1,12 +1,32 @@
 import Board from './board';
 
+function getBoard(size) {
+  let board = [];
+  for (let i = 0; i < size; i++) {
+    board[i] = [];
+    for (let j = 0; j < size; j++) {
+      board[i][j] = 0;
+    }
+  }
+  return board;
+}
+function getStatusBoard(size) {
+  let statusBoard = [];
+  for (let i = 0; i < size; i++) {
+    statusBoard[i] = [];
+    for (let j = 0; j < size; j++) {
+      statusBoard[i][j] = {
+        isMerged: false,
+        isNew: false,
+      };
+    }
+  }
+  return statusBoard;
+}
+
 const initState = {
-  board: [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-  ],
+  board: JSON.parse(JSON.stringify(getBoard(4))),
+  statusBoard: getStatusBoard(4),
   score: 0,
   bestScore: 0,
   gameOver: false,
@@ -39,23 +59,26 @@ export default function gameReducer(state = initState, action) {
       return { ...state, ...res };
     }
     case MOVE_UP: {
+      let statusBoard = getStatusBoard(4);
       const res = bd.move('up');
-      return { ...state, ...res };
+      return { ...state, ...res, ...statusBoard };
     }
     case MOVE_DOWN: {
+      let statusBoard = getStatusBoard(4);
       const res = bd.move('down');
-      return { ...state, ...res };
+      return { ...state, ...res, ...statusBoard };
     }
     case MOVE_LEFT: {
+      let statusBoard = getStatusBoard(4);
       const res = bd.move('left');
-      return { ...state, ...res };
+      return { ...state, ...res, ...statusBoard };
     }
     case MOVE_RIGHT: {
+      let statusBoard = getStatusBoard(4);
       const res = bd.move('right');
-      return { ...state, ...res };
+      return { ...state, ...res, ...statusBoard };
     }
     case RESET: {
-      // const tmp = JSON.parse(JSON.stringify(initState));
       const tmp = initStateCopy;
       bd = new Board(tmp);
       bd.addRandomToBoard();

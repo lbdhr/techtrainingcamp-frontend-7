@@ -1,3 +1,17 @@
+export function animationFunc(node, target, direction) {
+  // node是对应DOM元素
+  let timer = null;
+  timer = setInterval(function () {
+    let speed = (target - parseInt(node.style[direction])) / 5;
+    speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+    node.style[direction] = parseInt(node.style[direction]) + speed + 'px';
+    console.log(1);
+    if (parseInt(node.style[direction]) === target) {
+      clearInterval(timer);
+    }
+  }, 100);
+}
+
 export const cellBackgroundColor = number => {
   switch (number) {
     case 2:
@@ -40,7 +54,8 @@ export const cellColor = number => {
       return;
   }
 };
-export const fontSize = number => {
+
+export const cellFontSize = number => {
   if (number < 10) {
     return '55px';
   } else if (number < 100) {
