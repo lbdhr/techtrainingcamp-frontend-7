@@ -28,8 +28,8 @@ class RankingList extends React.Component{
         // )
 
         return (
-            <div>
-                <div>
+            <div class="row">
+                <div className="col-md-6">
                     <h3>对战模式积分榜</h3>
                     <table class="table table-hover">
                         <tr>
@@ -40,7 +40,7 @@ class RankingList extends React.Component{
                         { tableOnline }
                     </table>
                 </div>
-                <div className="container">
+                <div className="col-md-6">
                     <h3>离线模式积分榜</h3>
                     <table class="table table-hover">
                         <tr>
