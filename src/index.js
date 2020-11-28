@@ -1,17 +1,96 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import logger from 'redux-logger';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+
+import rootReducer from './reducers';
+
+import routes from './routes';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import NavigationBar from './components/NavigationBar';
+import FlashMessagesList from './components/flash/FlashMessagesList';
+import setAuthorizationToken from './utils/setAuthorizationToken';
+import { setCurrentUser } from './actions/login';
+import jwtDecode from 'jwt-decode';
+import undoable from 'redux-undo';
+
+// import Main from './pages/Main';
+// import gameStore from './gameReducers/gameStore';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+const initHistory = JSON.parse(localStorage.getItem('state') || 'null');
+const args = [
+    undoable(rootReducer, {
+        ignoreInitialState: true,
+        limit: 11,
+    }),
+];
+if (initHistory) {
+    args.push(initHistory);
+}
+
+// 接入服务器及注册登录部分
+const store = createStore(...args, composeWithDevTools(applyMiddleware(logger, thunk)))
+store.subscribe(() => {
+    const state = store.getState();
+    localStorage.setItem('state', JSON.stringify(state));
+});
+
+if(localStorage.jwtToken){
+  setAuthorizationToken(localStorage.jwtToken);
+  store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+  <Provider store={ store }>
+      <Router routes={ routes }>
+          <NavigationBar />
+          <FlashMessagesList />
+          { routes }
+      </Router>
+  </Provider>
+  ,
+  document.getElementById('root'));
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+// 2048游戏部分
+// import reportWebVitals from './reportWebVitals';
+
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <Provider store={gameStore}>
+//       <Main />
+//     </Provider>
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );
+
+
+
+// long long ago部分
+
+// import Test from './test';
+// 这里是加入登陆验证的页面布置
+// ReactDOM.render(
+//   <Provider store={ store }>
+//       <Router routes={ routes }>
+//           <NavigationBar />
+//           <FlashMessagesList />
+//           { routes }
+//       </Router>
+//   </Provider>
+//   ,
+//   document.getElementById('root'));
+
+// import reportWebVitals from './reportWebVitals';
+
+// // If you want to start measuring performance in your app, pass a function
+// // to log results (for example: reportWebVitals(console.log))
+// // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// reportWebVitals();

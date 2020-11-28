@@ -1,0 +1,18 @@
+* button {
+  /* 去掉默认样式 */
+  border: none;
+  background-color: transparent;
+  outline: none !important;
+}
+div button {
+  margin: 0px 5px;
+  padding: 10px 10px;
+  background-color: #8f7a66;
+  font-family: Arial;
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+}
+div button:hover {
+  background-color: #9f8b77;
+}
