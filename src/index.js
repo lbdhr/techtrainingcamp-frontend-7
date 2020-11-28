@@ -42,7 +42,6 @@ store.subscribe(() => {
     localStorage.setItem('state', JSON.stringify(state));
 });
 
-
 if(localStorage.jwtToken){
   setAuthorizationToken(localStorage.jwtToken);
   store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));

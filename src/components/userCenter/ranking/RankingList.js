@@ -65,7 +65,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-        getUserInfo:bindActionCreators(getUserInfo,dispatch),
+        getUserInfo: bindActionCreators(getUserInfo,dispatch),
         setUserInfo: bindActionCreators(setUserInfo, dispatch)
     }
 }
