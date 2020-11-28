@@ -7,6 +7,15 @@ var client = mysql.createConnection({
     database:"iwenuser"
 })
 
+client.connect(function(err) {
+    if (err) {
+        console.error('error connecting: ' + err.stack);
+        return;
+    }
+
+    console.log('connected as id ' + client.threadId);
+});
+
 function sqlFn(sql,arr,callback){
     client.query(sql,arr,function(error,result){
         if(error){
