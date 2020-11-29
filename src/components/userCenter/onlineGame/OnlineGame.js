@@ -32,7 +32,9 @@ class OnlineGame extends React.Component {
         super(props);
         this.state = {
             chattings: [],
-            roomData: ""
+            roomData: "",
+            isMaster: false,
+            startedGame: false
         };
     }
 
@@ -52,9 +54,21 @@ class OnlineGame extends React.Component {
         });
 
         socket.on("roomData", ({users}) => {
+            if(users.length === 1) {
+                this.setState({
+                    roomData: users,
+                    isMaster: true
+                })
+            } else {
+                this.setState({
+                    roomData: users,
+                })
+            }
+        });
+        socket.on('startGame', message => {
             this.setState({
-                roomData: users
-            })
+                startedGame: true
+            });
         });
     }
 
@@ -68,6 +82,11 @@ class OnlineGame extends React.Component {
         }
     }
 
+    startGame = (event) => {
+        event.preventDefault();
+        socket.emit('startGame', "", ()=>{});
+    }
+
     render() {
         return (
             <div class="row">
@@ -78,7 +97,7 @@ class OnlineGame extends React.Component {
                     <TextContainer users={this.state.roomData}/>
                 </div>
                 <div className="col-md-6">
-                    这里放上棋盘组件
+                    {this.state.startedGame ? "棋盘组件" : (this.state.isMaster ? <button onClick={this.startGame}>开始游戏</button> : "请等待房主开始游戏")}
                 </div>
             </div>
         );
