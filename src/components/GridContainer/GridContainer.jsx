@@ -10,30 +10,61 @@ const getPosition = i => {
 };
 
 function GridContainer(props) {
-  const gridCell = props.board.map((row, rowIndex) => (
-    <div key={row + rowIndex}>
-      {row.map(() => (
-        <div className="grid-cell"></div>
-      ))}
-    </div>
-  ));
-
+  let gridCell = {};
   let cellArr = [];
-  props.board.forEach((row, rowIndex) => {
-    row.forEach((col, colIndex) => {
-      let key = rowIndex + '-' + colIndex + '-' + col;
-      let position = { rowIndex, colIndex };
-      let statusBoard = {
-        isMerged: props.statusBoard[rowIndex][colIndex].isMerged,
-        isNew: props.statusBoard[rowIndex][colIndex].isNew,
-      };
-      if (col > 0) {
-        cellArr.push(
-          <NumberCell value={col} key={key} position={position} statusBoard={statusBoard} />
-        );
-      }
+  if(!props.showOthers) {
+    console.log("render my board!")
+    gridCell = props.board.map((row, rowIndex) => (
+        <div key={row + rowIndex}>
+          {row.map(() => (
+              <div className="grid-cell"></div>
+          ))}
+        </div>
+    ));
+
+    props.board.forEach((row, rowIndex) => {
+      row.forEach((col, colIndex) => {
+        let key = rowIndex + '-' + colIndex + '-' + col;
+        let position = { rowIndex, colIndex };
+        let statusBoard = {
+          isMerged: props.statusBoard[rowIndex][colIndex].isMerged,
+          isNew: props.statusBoard[rowIndex][colIndex].isNew,
+        };
+        if (col > 0) {
+          cellArr.push(
+              <NumberCell value={col} key={key} position={position} statusBoard={statusBoard} />
+          );
+        }
+      });
     });
-  });
+  } else{
+    console.log("render others' boards!");
+    // 这里开始渲染别人的棋盘
+    gridCell = props.board.map((row, rowIndex) => (
+        <div key={row + rowIndex}>
+          {row.map(() => (
+              <div className="grid-cell"></div>
+          ))}
+        </div>
+    ));
+
+    props.board.forEach((row, rowIndex) => {
+      row.forEach((col, colIndex) => {
+        let key = rowIndex + '-' + colIndex + '-' + col;
+        let position = { rowIndex, colIndex };
+        let statusBoard = {
+          isMerged: props.statusBoard[rowIndex][colIndex].isMerged,
+          isNew: props.statusBoard[rowIndex][colIndex].isNew,
+        };
+        if (col > 0) {
+          cellArr.push(
+              <NumberCell value={col} key={key} position={position} statusBoard={statusBoard} />
+          );
+        }
+      });
+    });
+  }
+
   return (
     <div className="grid-container">
       {gridCell}
