@@ -11,9 +11,11 @@ const mapStateToProps = state => ({
   state: state.present.gameReducer,
 });
 
-const mapDispatchToProps = {
-  onInit: initBoard,
-  uploadSocre: uploadSocre,
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onInit: bindActionCreators(initBoard, dispatch),
+    uploadSocre: bindActionCreators(uploadSocre, dispatch)
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

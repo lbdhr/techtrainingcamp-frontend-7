@@ -9,7 +9,7 @@ function Main(props) {
     initBoard();
     console.log(props);
     return () => {
-      console.log("I have been unmounted!");
+      console.log(`I have been unmounted!, score: ${props.score}`);
       const scoreDetails = {
         username: props.detailsToMain.username,
         mode: props.detailsToMain.mode,

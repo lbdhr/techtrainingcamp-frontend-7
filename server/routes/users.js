@@ -78,12 +78,12 @@ router.get("/usercenter/rankings", (req, res) => {
 router.post("/usercenter/scoreupload", (req, res) => {
     console.log("/usercenter/scoreupload");
     const {username, score, mode} = req.body;
-    // console.log(`username: ${username}`);
+    console.log(`username: ${username}, now score: ${score}`);
     let sql = "select * from user where `username`=?"
     let arr = [username];
     sqlFn(sql, arr, function(data){
         if(data.length>0){
-            console.log(data);
+            // console.log(data);
             if(mode === "online") {
                 if(data[0].scoreOnline < score) {
                     let sql = "update user set `scoreOnline`=? where `username`=?";
