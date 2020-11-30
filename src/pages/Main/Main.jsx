@@ -8,6 +8,9 @@ function Main(props) {
   useEffect(() => {
     initBoard();
     console.log(props);
+  }, []);
+
+  useEffect( () => {
     return () => {
       console.log(`I have been unmounted!, score: ${props.score}`);
       const scoreDetails = {
@@ -20,7 +23,7 @@ function Main(props) {
           (err) => alert("分数上传失败！")
       );
     }
-  }, []);
+  });
 
   const initBoard = () => {
     let isEmpty = true;
