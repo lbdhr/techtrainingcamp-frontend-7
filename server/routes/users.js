@@ -103,7 +103,7 @@ router.post("/usercenter/scoreupload", (req, res) => {
                     })
                 }
             }
-            res.send(data);
+            else res.send(data);
         } else {
             res.status(401).json({ errors:{from:"用户名错误"}})
         }
