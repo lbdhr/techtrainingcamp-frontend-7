@@ -12,6 +12,7 @@ const getPosition = i => {
 function GridContainer(props) {
   let gridCell = {};
   let cellArr = [];
+
   if(!props.showOthers) {
     console.log("render my board!")
     gridCell = props.board.map((row, rowIndex) => (

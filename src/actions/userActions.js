@@ -9,6 +9,14 @@ export const getUserInfo = () =>{
     }
 }
 
+
+export const uploadSocre = (scoreDetails) => {
+    console.log("begin to upload score!");
+    return dispatch =>{
+        return axios.post("/api/users/usercenter/scoreupload", scoreDetails);
+    }
+}
+
 export const setUserInfo = (message) => {
     return {
         type: SET_USER_INFO,

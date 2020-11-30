@@ -73,6 +73,42 @@ router.get("/usercenter/rankings", (req, res) => {
             res.send({});
         }
     })
-})
+});
+
+router.post("/usercenter/scoreupload", (req, res) => {
+    console.log("/usercenter/scoreupload");
+    const {username, score, mode} = req.body;
+    // console.log(`username: ${username}`);
+    let sql = "select * from user where `username`=?"
+    let arr = [username];
+    sqlFn(sql, arr, function(data){
+        if(data.length>0){
+            console.log(data);
+            if(mode === "online") {
+                if(data[0].scoreOnline < score) {
+                    let sql = "update user set `scoreOnline`=? where `username`=?";
+                    let arr = [score, username];
+                    sqlFn(sql, arr, function(data){
+                        if(data) res.send(data);
+                        else res.status(401).json({ errors:{from:"分数更新失败"}});
+                    })
+                }
+            } else if(mode === "offline") {
+                if(data[0].scoreOffline < score) {
+                    let sql = "update user set `scoreOffline`=? where `username`=?";
+                    let arr = [score, username];
+                    sqlFn(sql, arr, function(data){
+                        if(data) res.send(data);
+                        else res.status(401).json({ errors:{from:"分数更新失败"}});
+                    })
+                }
+            }
+            res.send(data);
+        } else {
+            res.status(401).json({ errors:{from:"用户名错误"}})
+        }
+    })
+
+});
 
 module.exports = router;

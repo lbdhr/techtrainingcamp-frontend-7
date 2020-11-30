@@ -4,10 +4,22 @@ import GridContainer from '../../components/GridContainer';
 import Button from '../../components/Button';
 import Controller from '../../components/Controller';
 
-export default function Main(props) {
+function Main(props) {
   useEffect(() => {
     initBoard();
     console.log(props);
+    return () => {
+      console.log("I have been unmounted!");
+      const scoreDetails = {
+        username: props.detailsToMain.username,
+        mode: props.detailsToMain.mode,
+        score: props.score
+      };
+      props.uploadSocre(scoreDetails).then(
+          (res) => alert("分数已上传！"),
+          (err) => alert("分数上传失败！")
+      );
+    }
   }, []);
 
   const initBoard = () => {
@@ -41,3 +53,5 @@ export default function Main(props) {
     </div>
   );
 }
+
+export default Main
