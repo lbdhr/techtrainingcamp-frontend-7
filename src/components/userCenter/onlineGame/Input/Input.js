@@ -22,7 +22,7 @@ const Input = ({ sendMessage }) => {
                 onChange={(event) => setMessage(event.target.value)}
                 onKeyPress={event => event.key === 'Enter' ? sendMyMessage(event) : null}
             />
-            <button className="sendButton" onClick={(e) => sendMyMessage(e)}>发送!</button>
+            <button className="btn btn-primary btn-lg" onClick={(e) => sendMyMessage(e)}>发送！</button>
         </form>
     )
 }

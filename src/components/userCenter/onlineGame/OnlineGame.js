@@ -97,7 +97,7 @@ class OnlineGame extends React.Component {
                     <TextContainer users={this.state.roomData}/>
                 </div>
                 <div className="col-md-6">
-                    {this.state.startedGame ? "棋盘组件" : (this.state.isMaster ? <button onClick={this.startGame}>开始游戏</button> : "请等待房主开始游戏")}
+                    {this.state.startedGame ? "棋盘组件" : (this.state.isMaster ? (<div><p>{this.props.name}，您是房主：</p><button onClick={this.startGame} className="btn btn-primary btn-lg">点击开始游戏！</button></div>) : "请等待房主开始游戏")}
                 </div>
             </div>
         );
