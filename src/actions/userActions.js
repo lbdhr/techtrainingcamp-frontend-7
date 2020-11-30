@@ -10,7 +10,7 @@ export const getUserInfo = () =>{
 }
 
 
-export const uploadSocre = (scoreDetails) => {
+export const uploadScore = (scoreDetails) => {
     console.log(`begin to upload user: ${scoreDetails.username} score: ${scoreDetails.score}`);
     return dispatch =>{
         return axios.post("/api/users/usercenter/scoreupload", scoreDetails);

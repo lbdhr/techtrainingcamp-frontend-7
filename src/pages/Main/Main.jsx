@@ -1,29 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './main.css';
 import GridContainer from '../../components/GridContainer';
 import Button from '../../components/Button';
 import Controller from '../../components/Controller';
 
 function Main(props) {
+
+  let scoreDetails = useRef({});
+
   useEffect(() => {
     initBoard();
     console.log(props);
-  }, []);
-
-  useEffect( () => {
     return () => {
-      console.log(`I have been unmounted!, score: ${props.score}`);
-      const scoreDetails = {
-        username: props.detailsToMain.username,
-        mode: props.detailsToMain.mode,
-        score: props.score
-      };
-      props.uploadSocre(scoreDetails).then(
+      console.log(`I have been unmounted!, score: ${scoreDetails.current.score}`);
+      props.uploadSocre(scoreDetails.current).then(
           (res) => alert("分数已上传！"),
           (err) => alert("分数上传失败！")
       );
     }
-  });
+  }, []);
+
+  useEffect( () => {
+    scoreDetails.current = {
+      username: props.detailsToMain.username,
+      mode: props.detailsToMain.mode,
+      score: props.score
+    };
+  }, [props]);
 
   const initBoard = () => {
     let isEmpty = true;

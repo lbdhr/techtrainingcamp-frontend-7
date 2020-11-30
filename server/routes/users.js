@@ -93,6 +93,7 @@ router.post("/usercenter/scoreupload", (req, res) => {
                         else res.status(401).json({ errors:{from:"分数更新失败"}});
                     })
                 }
+                else res.send(data);
             } else if(mode === "offline") {
                 if(data[0].scoreOffline < score) {
                     let sql = "update user set `scoreOffline`=? where `username`=?";
@@ -102,6 +103,7 @@ router.post("/usercenter/scoreupload", (req, res) => {
                         else res.status(401).json({ errors:{from:"分数更新失败"}});
                     })
                 }
+                else res.send(data);
             }
             else res.send(data);
         } else {
