@@ -14,8 +14,8 @@ function Main(props) {
     return () => {
       console.log(`I have been unmounted!, score: ${scoreDetails.current.score}`);
       props.uploadSocre(scoreDetails.current).then(
-          (res) => alert("分数已上传！"),
-          (err) => alert("分数上传失败！")
+          (res) => console.log("分数已上传！"),
+          (err) => console.log("分数上传失败！")
       );
     }
   }, []);
@@ -27,6 +27,14 @@ function Main(props) {
       score: props.score
     };
   }, [props]);
+
+  const clickChange = () => {
+    console.log(`I have been clicked!, score: ${scoreDetails.current.score}`);
+    props.uploadSocre(scoreDetails.current).then(
+        (res) => alert("分数已上传！"),
+        (err) => alert("分数上传失败！")
+    );
+  }
 
   const initBoard = () => {
     let isEmpty = true;
@@ -54,6 +62,7 @@ function Main(props) {
         </p>
       </header>
       <GridContainer />
+      <button className="btn btn-primary btn-lg" onClick={clickChange}>保存分数！</button>
       <Controller />
       {/* <Controler board={board.board} /> */}
     </div>
