@@ -39,7 +39,7 @@ function GridContainer(props) {
       });
     });
   } else{
-    console.log("render others' boards!");
+    console.log(`render others' boards: ${props.showOthers.board}`);
     // 这里开始渲染别人的棋盘
     gridCell = props.showOthers.board.map((row, rowIndex) => (
         <div key={row + rowIndex}>

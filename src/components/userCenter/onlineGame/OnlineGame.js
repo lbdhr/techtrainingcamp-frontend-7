@@ -92,7 +92,7 @@ class OnlineGame extends React.Component {
                     otherBoards: tempBoards
                 });
             }
-            console.log(this.state.otherBoards)
+            console.log(`OnlineGame: ${this.state.otherBoards[0].board}`)
         });
     }
 

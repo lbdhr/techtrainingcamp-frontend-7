@@ -4,7 +4,7 @@ import GridContainer from "../../GridContainer";
 class ViewOtherBoards extends React.Component{
 
     render(){
-        console.log("ViewOtherBoards!")
+        console.log(`ViewOtherBoards`);
         const otherBoard = this.props.otherBoards.map((item, idx) =>
             <div class="col-xs-3">
                 <p>用户名: {item.username}; 分数: {item.score}</p>
