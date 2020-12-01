@@ -12,7 +12,7 @@ export default function Button(props) {
     <div>
       <button onClick={props.onReset}>重新开始</button>
       <button onClick={handleRetreat}>悔棋</button>
-      <button>对战模式</button>
+      <button onClick={props.clickChange}>上传分数</button>
     </div>
   );
 }

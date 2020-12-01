@@ -67,14 +67,14 @@ function Main(props) {
     <div>
       <header>
         <h1>2048</h1>
-        <Button />
+        <Button clickChange={clickChange}/>
         <p>
           <span>score: {props.score}</span>
           <span>best score: {props.score}</span>
         </p>
       </header>
       <GridContainer />
-      <button className="btn btn-primary btn-lg" onClick={clickChange}>保存分数！</button>
+      {/*<button className="btn btn-primary btn-lg" onClick={clickChange}>保存分数！</button>*/}
       <Controller />
       {/* <Controler board={board.board} /> */}
     </div>
