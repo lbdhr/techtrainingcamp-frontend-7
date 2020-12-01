@@ -26,7 +26,16 @@ function Main(props) {
       mode: props.detailsToMain.mode,
       score: props.score
     };
-  }, [props]);
+    if(props.detailsToMain.mode === "online") {
+      let onlineDetails = {
+        username: props.detailsToMain.username,
+        score: props.score,
+        board: props.board
+      }
+      console.log("online mode to transmit!");
+      props.submitRes(onlineDetails);
+    }
+  }, [props.score]);
 
   const clickChange = () => {
     console.log(`I have been clicked!, score: ${scoreDetails.current.score}`);

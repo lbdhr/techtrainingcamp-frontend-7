@@ -74,6 +74,13 @@ io.on('connect',(socket)=>{
        callback();
     });
 
+    socket.on('updateBoard', (message, callback) => {
+        const user = getUser(socket.id);
+        console.log(`updateBoard from ${user.name}`);
+        console.log(message);
+        socket.broadcast.to(user.room).emit('newBoard', message);
+    });
+
     socket.on('disconnect', () => {
         console.log("disconnect has been touched!");
         const user = removeUser(socket.id);

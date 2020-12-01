@@ -41,7 +41,7 @@ function GridContainer(props) {
   } else{
     console.log("render others' boards!");
     // 这里开始渲染别人的棋盘
-    gridCell = props.board.map((row, rowIndex) => (
+    gridCell = props.showOthers.board.map((row, rowIndex) => (
         <div key={row + rowIndex}>
           {row.map(() => (
               <div className="grid-cell"></div>
@@ -49,7 +49,7 @@ function GridContainer(props) {
         </div>
     ));
 
-    props.board.forEach((row, rowIndex) => {
+    props.showOthers.board.forEach((row, rowIndex) => {
       row.forEach((col, colIndex) => {
         let key = rowIndex + '-' + colIndex + '-' + col;
         let position = { rowIndex, colIndex };

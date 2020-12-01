@@ -6,6 +6,8 @@ import TextContainer from './TextContainer/TextContainer';
 import Messages from './Messages/Messages';
 import InfoBar from './InfoBar/InfoBar';
 import Input from './Input/Input';
+import ViewOtherBoards from "./ViewOtherBoards";
+import Main from "../../../pages/Main"
 
 // import './OnlineGame.css'
 
@@ -34,7 +36,8 @@ class OnlineGame extends React.Component {
             chattings: [],
             roomData: "",
             isMaster: false,
-            startedGame: false
+            startedGame: false,
+            otherBoards: []
         };
     }
 
@@ -70,6 +73,27 @@ class OnlineGame extends React.Component {
                 startedGame: true
             });
         });
+        socket.on('newBoard', message => {
+            let tempBoards = this.state.otherBoards;
+            // let obj = tempBoards.find(function (obj) {
+            //     return obj.username === message.username;
+            // });
+            let idx = tempBoards.findIndex(item => item.username === message.username)
+            if (idx!==-1) {
+                tempBoards[idx].score = message.score;
+                tempBoards[idx].board = message.board;
+                this.setState({
+                    otherBoards: tempBoards
+                })
+            }
+            else {
+                tempBoards.push(message);
+                this.setState({
+                    otherBoards: tempBoards
+                });
+            }
+            console.log(this.state.otherBoards)
+        });
     }
 
     componentWillUnmount() {
@@ -87,17 +111,35 @@ class OnlineGame extends React.Component {
         socket.emit('startGame', "", ()=>{});
     }
 
+    submitRes = (message) => {
+        if(message) {
+            socket.emit('updateBoard', message, ()=>{});
+        }
+    }
+
     render() {
+
+        const detailsToMain = {
+            username: this.props.name,
+            mode: "online",
+        };
+
         return (
-            <div class="row">
-                <div className="col-md-6">
-                    <InfoBar room={this.props.room}/>
-                    <Messages messages={this.state.chattings} name={this.props.name}/>
-                    <Input sendMessage={this.clickChange} />
-                    <TextContainer users={this.state.roomData}/>
+            <div>
+                <div class="row">
+                    <div className="col-md-6">
+                        <InfoBar room={this.props.room}/>
+                        <Messages messages={this.state.chattings} name={this.props.name}/>
+                        <Input sendMessage={this.clickChange} />
+                        <TextContainer users={this.state.roomData}/>
+                    </div>
+                    <div className="col-md-6">
+                        {this.state.startedGame ? <Main detailsToMain={detailsToMain} submitRes={this.submitRes}/> : (this.state.isMaster ? (<div><p>{this.props.name}，您是房主：</p><button onClick={this.startGame} className="btn btn-primary btn-lg">点击开始游戏！</button></div>) : "请等待房主开始游戏")}
+                    </div>
                 </div>
-                <div className="col-md-6">
-                    {this.state.startedGame ? "棋盘组件" : (this.state.isMaster ? (<div><p>{this.props.name}，您是房主：</p><button onClick={this.startGame} className="btn btn-primary btn-lg">点击开始游戏！</button></div>) : "请等待房主开始游戏")}
+                <div class="row">
+                    <p>游戏房间内其他玩家目前状态:</p>
+                    <ViewOtherBoards otherBoards={this.state.otherBoards}/>
                 </div>
             </div>
         );
