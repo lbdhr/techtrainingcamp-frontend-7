@@ -9,6 +9,9 @@ function Main(props) {
   let scoreDetails = useRef({});
 
   useEffect(() => {
+    if(props.detailsToMain.mode === "online") {
+      props.onReset();
+    }
     initBoard();
     console.log(props);
     return () => {

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { initBoard } from '../../reducers/gameReducer';
+import {initBoard, reset} from '../../reducers/gameReducer';
 import Main from './Main';
 import { uploadScore } from '../../actions/userActions';
-import {bindActionCreators } from "redux"
+import { bindActionCreators } from "redux"
 
 const mapStateToProps = state => ({
   board: state.present.gameReducer.board,
@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch) =>  {
     return {
+        onReset: bindActionCreators(reset, dispatch),
         onInit: bindActionCreators(initBoard, dispatch),
         uploadSocre: bindActionCreators(uploadScore, dispatch)
     }
