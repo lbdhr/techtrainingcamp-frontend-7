@@ -10,6 +10,7 @@ const getPosition = i => {
 };
 
 function GridContainer(props) {
+  console.log('gridcontainer!')
   let gridCell = {};
   let cellArr = [];
 
