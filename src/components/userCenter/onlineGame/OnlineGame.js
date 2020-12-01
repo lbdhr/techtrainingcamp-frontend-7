@@ -12,7 +12,8 @@ import Main from "../../../pages/Main"
 // import './OnlineGame.css'
 
 
-const ENDPOINT = 'http://localhost:3030/';
+// const ENDPOINT = 'http://localhost:3030/';
+const ENDPOINT = 'http://202.120.42.141:3030/';
 
 let socket;
 
