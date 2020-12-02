@@ -7,7 +7,7 @@ const bodyParser = require("body-parser")
 const auth = require("./routes/auth")
 const defaultRouter = require('./routes/defaultRoute')
 
-const cors = require('cors');
+// const cors = require('cors');
 
 const mySocketIo = require('socket.io');
 const server = http.createServer(app);
@@ -20,6 +20,7 @@ const io = mySocketIo(server, {
 // const http = require('http').Server(app)
 // const io = require('socket.io')(http)
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/rooms')
+let roomTimers = [];
 
 app.use(bodyParser.json());
 app.use("/api/users",users);
@@ -67,10 +68,15 @@ io.on('connect',(socket)=>{
     });
 
     socket.on('startGame', (message, callback) => {
-       console.log("startGame");
+       console.log(`startGame: ${message} minutes`);
        const user = getUser(socket.id);
-
-       io.to(user.room).emit('startGame', {});
+       const timeEnd = Date.now() + parseInt(message)*60000;
+       const roomTimer = {
+           room: user.room,
+           timeEnd
+       };
+       roomTimers.push(roomTimer);
+       io.to(user.room).emit('startGame', timeEnd);
        callback();
     });
 
@@ -78,7 +84,7 @@ io.on('connect',(socket)=>{
         const user = getUser(socket.id);
         console.log(`updateBoard from ${user.name}`);
         console.log(message);
-        socket.broadcast.to(user.room).emit('newBoard', message);
+        socket.to(user.room).emit('newBoard', message);
     });
 
     socket.on('disconnect', () => {
@@ -93,8 +99,19 @@ io.on('connect',(socket)=>{
 
 });
 
-
-
 server.listen(3030,(req,res) =>{   //http
     debug("服务器运行在3030端口上");
 })
+
+
+
+setInterval(()=>{
+    roomTimers.slice().reverse().forEach(function (item, index, arr1) {
+        let timeNow = Date.now();
+        if (item.timeEnd <= timeNow) {
+            io.to(item.room).emit('endGame', {});
+            roomTimers.splice(arr1.length - 1 - index, 1);
+        }
+    });
+
+}, 500)

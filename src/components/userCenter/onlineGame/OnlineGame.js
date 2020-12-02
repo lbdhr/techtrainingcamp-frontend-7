@@ -8,8 +8,7 @@ import InfoBar from './InfoBar/InfoBar';
 import Input from './Input/Input';
 import ViewOtherBoards from "./ViewOtherBoards";
 import Main from "../../../pages/Main"
-
-// import './OnlineGame.css'
+import classnames from 'classnames'
 
 
 // const ENDPOINT = 'http://localhost:3030/';
@@ -18,19 +17,7 @@ const ENDPOINT = 'http://202.120.42.141:3030/';
 let socket;
 
 class OnlineGame extends React.Component {
-    // const [name, setName] = useState('');
-    // const [room, setRoom] = useState('');
-    // const [users, setUsers] = useState('');
-    // const [message, setMessage] = useState('');
-    // const [messages, setMessages] = useState([]);
-    //
-    // const sendMessage = (event) => {
-    //     event.preventDefault();
-    //
-    //     if(message) {
-    //         socket.emit('sendMessage', message, () => setMessage(''));
-    //     }
-    // }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -38,7 +25,12 @@ class OnlineGame extends React.Component {
             roomData: "",
             isMaster: false,
             startedGame: false,
-            otherBoards: []
+            gameTime: 0,
+            gameTimeErr: false,
+            otherBoards: [],
+            timeEnd: 0,
+            timeMin: 0,
+            timeSec: 0
         };
     }
 
@@ -70,15 +62,19 @@ class OnlineGame extends React.Component {
             }
         });
         socket.on('startGame', message => {
+            console.log(`endTime: ${message/60000}`)
             this.setState({
-                startedGame: true
+                startedGame: true,
+                timeEnd: parseInt(message)
             });
         });
+        socket.on('endGame', message =>{
+            this.setState({
+                startedGame: false
+            });
+        })
         socket.on('newBoard', message => {
             let tempBoards = this.state.otherBoards;
-            // let obj = tempBoards.find(function (obj) {
-            //     return obj.username === message.username;
-            // });
             let idx = tempBoards.findIndex(item => item.username === message.username)
             if (idx!==-1) {
                 tempBoards[idx].score = message.score;
@@ -93,7 +89,7 @@ class OnlineGame extends React.Component {
                     otherBoards: tempBoards
                 });
             }
-            console.log(`OnlineGame: ${this.state.otherBoards[0].board}`)
+            // console.log(`OnlineGame: ${this.state.otherBoards[0].board}`)
         });
     }
 
@@ -109,7 +105,16 @@ class OnlineGame extends React.Component {
 
     startGame = (event) => {
         event.preventDefault();
-        socket.emit('startGame', "", ()=>{});
+        if(this.state.gameTime >= 1) {
+            // const message = {timePeriod: this.state.gameTime};
+            socket.emit('startGame', this.state.gameTime, () => {
+            });
+        }
+        else{
+            this.setState({
+                gameTimeErr: true
+            })
+        }
     }
 
     submitRes = (message) => {
@@ -117,6 +122,27 @@ class OnlineGame extends React.Component {
             socket.emit('updateBoard', message, ()=>{});
         }
     }
+
+    handleChange = (event) => {
+        this.setState({
+            gameTime: event.target.value
+        });
+    }
+
+    showTimer = () => {
+        this.timer = setInterval(()=>{
+            const timeLast = this.state.endTime - Date.now();
+            if(timeLast>1000){
+                this.setState({
+                    timeMin: Math.floor(timeLast%60),
+                    timeSec: Math.floor(timeLast/60)
+                })
+            } else {
+                clearInterval(this.timer);
+            }
+        }, 1000);
+    }
+
 
     render() {
 
@@ -135,7 +161,22 @@ class OnlineGame extends React.Component {
                         <TextContainer users={this.state.roomData}/>
                     </div>
                     <div className="col-md-6">
-                        {this.state.startedGame ? <Main detailsToMain={detailsToMain} submitRes={this.submitRes}/> : (this.state.isMaster ? (<div><p>{this.props.name}，您是房主：</p><button onClick={this.startGame} className="btn btn-primary btn-lg">点击开始游戏！</button></div>) : "请等待房主开始游戏")}
+                            {this.state.startedGame ? <div><p>距离游戏结束还有：{this.state.timeMin}分{this.state.timeSec}秒</p><Main detailsToMain={detailsToMain} submitRes={this.submitRes}/></div> :
+                                (this.state.isMaster ? (
+                                    <form onSubmit={()=>{}}>
+                                        <div>
+                                            <p>{this.props.name}，您是房主，请设置本局游戏时间（分钟）并点击以开始游戏：</p>
+                                            <div className="form-group">
+                                                <input type="text" name="gameTime" onChange={this.handleChange}
+                                                       className={ classnames('form-control',{ 'is-invalid': this.state.gameTimeErr }) }/>
+                                                { this.state.gameTimeErr && <span className="form-text text-muted">最短游戏时间不能少于3分钟</span> }
+                                            </div>
+                                            <div className="form-group">
+                                                <button onClick={this.startGame} className="btn btn-primary btn-lg">点击开始游戏！</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    ) : "请等待房主开始游戏")}
                     </div>
                 </div>
                 <div class="row">
