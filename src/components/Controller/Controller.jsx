@@ -44,5 +44,5 @@ export default function Controller(props) {
     }
   };
 
-  return <div>控制器</div>;
+  return <div></div>;
 }
