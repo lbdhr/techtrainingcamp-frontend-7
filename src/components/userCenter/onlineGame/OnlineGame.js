@@ -28,7 +28,6 @@ class OnlineGame extends React.Component {
             gameTime: 0,
             gameTimeErr: false,
             otherBoards: [],
-            timeEnd: 0,
             timeMin: 0,
             timeSec: 0
         };
@@ -62,11 +61,11 @@ class OnlineGame extends React.Component {
             }
         });
         socket.on('startGame', message => {
-            console.log(`endTime: ${message/60000}`)
+            // console.log(`endTime: ${message}`)
             this.setState({
-                startedGame: true,
-                timeEnd: parseInt(message)
+                startedGame: true
             });
+            this.showTimer(parseInt(message));
         });
         socket.on('endGame', message =>{
             this.setState({
@@ -129,13 +128,14 @@ class OnlineGame extends React.Component {
         });
     }
 
-    showTimer = () => {
+    showTimer = (endTime) => {
         this.timer = setInterval(()=>{
-            const timeLast = this.state.endTime - Date.now();
-            if(timeLast>1000){
+            const timeLast = Math.floor((parseInt(endTime) - Date.now())/1000);
+            // console.log()
+            if(timeLast>1){
                 this.setState({
-                    timeMin: Math.floor(timeLast%60),
-                    timeSec: Math.floor(timeLast/60)
+                    timeMin: Math.floor(timeLast/60),
+                    timeSec: Math.floor(timeLast%60)
                 })
             } else {
                 clearInterval(this.timer);
@@ -169,7 +169,7 @@ class OnlineGame extends React.Component {
                                             <div className="form-group">
                                                 <input type="text" name="gameTime" onChange={this.handleChange}
                                                        className={ classnames('form-control',{ 'is-invalid': this.state.gameTimeErr }) }/>
-                                                { this.state.gameTimeErr && <span className="form-text text-muted">最短游戏时间不能少于3分钟</span> }
+                                                { this.state.gameTimeErr && <span className="form-text text-muted">最短游戏时间不能少于1分钟</span> }
                                             </div>
                                             <div className="form-group">
                                                 <button onClick={this.startGame} className="btn btn-primary btn-lg">点击开始游戏！</button>

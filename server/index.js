@@ -84,7 +84,7 @@ io.on('connect',(socket)=>{
         const user = getUser(socket.id);
         console.log(`updateBoard from ${user.name}`);
         console.log(message);
-        socket.to(user.room).emit('newBoard', message);
+        io.to(user.room).emit('newBoard', message);
     });
 
     socket.on('disconnect', () => {
