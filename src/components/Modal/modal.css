@@ -12,11 +12,11 @@
 }
 .modal {
   background-color: transparent;
-  left: 50%;
+  left: 17%;
   margin-left: -15vw;
   margin-top: -10vw;
   position: fixed;
-  top: 50%;
+  top: 15%;
   z-index: 11; /* 1px higher than the overlay layer */
 
   align-content: center;
