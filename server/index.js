@@ -107,10 +107,16 @@ server.listen(3030,(req,res) =>{   //http
 
 setInterval(()=>{
     roomTimers.slice().reverse().forEach(function (item, index, arr1) {
-        let timeNow = Date.now();
-        if (item.timeEnd <= timeNow) {
-            io.to(item.room).emit('endGame', {});
+        if(getUsersInRoom(item.room).length===0) {
+            console.log(`room ${item.room} does not exist`);
             roomTimers.splice(arr1.length - 1 - index, 1);
+            console.log(roomTimers);
+        } else {
+            let timeNow = Date.now();
+            if (item.timeEnd <= timeNow) {
+                io.to(item.room).emit('endGame', {});
+                roomTimers.splice(arr1.length - 1 - index, 1);
+            }
         }
     });
 
