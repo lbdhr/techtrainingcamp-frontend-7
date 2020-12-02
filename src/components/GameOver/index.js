@@ -5,9 +5,9 @@ import './gameOver.css';
 export default function GameOver(props) {
   return (
     <div>
-      <Modal display={props.gameOver}>
+      <Modal display={true}>
         <div>
-          <div className="container"></div>
+          <div className="gameover-container ">xianshi gameover</div>
         </div>
       </Modal>
     </div>

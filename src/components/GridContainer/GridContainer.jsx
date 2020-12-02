@@ -1,4 +1,5 @@
-import React, { createRef, useEffect } from 'react';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import './gridContainer.css';
 import { animationFunc, cellBackgroundColor, cellColor, cellFontSize } from './cellColor';
 
@@ -10,18 +11,18 @@ const getPosition = i => {
 };
 
 function GridContainer(props) {
-  console.log('gridcontainer!')
+  console.log('gridcontainer!');
   let gridCell = {};
   let cellArr = [];
 
-  if(!props.showOthers) {
-    console.log("render my board!")
+  if (!props.showOthers) {
+    console.log('render my board!');
     gridCell = props.board.map((row, rowIndex) => (
-        <div key={row + rowIndex}>
-          {row.map(() => (
-              <div className="grid-cell"></div>
-          ))}
-        </div>
+      <div key={row + rowIndex}>
+        {row.map(() => (
+          <div className="grid-cell"></div>
+        ))}
+      </div>
     ));
 
     props.board.forEach((row, rowIndex) => {
@@ -34,20 +35,20 @@ function GridContainer(props) {
         };
         if (col > 0) {
           cellArr.push(
-              <NumberCell value={col} key={key} position={position} statusBoard={statusBoard} />
+            <NumberCell value={col} key={key} position={position} statusBoard={statusBoard} />
           );
         }
       });
     });
-  } else{
+  } else {
     console.log(`render others' boards: ${props.showOthers.board}`);
     // 这里开始渲染别人的棋盘
     gridCell = props.showOthers.board.map((row, rowIndex) => (
-        <div key={row + rowIndex}>
-          {row.map(() => (
-              <div className="grid-cell"></div>
-          ))}
-        </div>
+      <div key={row + rowIndex}>
+        {row.map(() => (
+          <div className="grid-cell"></div>
+        ))}
+      </div>
     ));
 
     props.showOthers.board.forEach((row, rowIndex) => {
@@ -60,7 +61,7 @@ function GridContainer(props) {
         };
         if (col > 0) {
           cellArr.push(
-              <NumberCell value={col} key={key} position={position} statusBoard={statusBoard} />
+            <NumberCell value={col} key={key} position={position} statusBoard={statusBoard} />
           );
         }
       });
@@ -75,46 +76,88 @@ function GridContainer(props) {
   );
 }
 
-function NumberCell(props) {
-  const {
-    value,
-    statusBoard: { isMerged, isNew },
-    position: { rowIndex, colIndex },
-  } = props;
+// function NumberCell(props) {
+//   const {
+//     value,
+//     statusBoard: { isMerged, isNew },
+//     position: { rowIndex, colIndex },
+//   } = props;
 
-  const cellRef = createRef();
-  useEffect(() => {
-    let { position } = props;
-    let node = cellRef.current;
-    let left = getPosition(position.colIndex);
-    let top = getPosition(position.rowIndex);
-    return () => {
-      animationFunc(node, top, 'top');
-      animationFunc(node, left, 'left');
-    };
-  });
+//   const cellRef = createRef();
+//   useEffect(() => {
+//     let { position } = props;
+//     let node = cellRef.current;
+//     let left = getPosition(position.colIndex);
+//     let top = getPosition(position.rowIndex);
+//     return () => {
+//       animationFunc(node, top, 'top');
+//       animationFunc(node, left, 'left');
+//     };
+//   });
 
-  // className
-  const cellClassNames = function () {
+//   // className
+//   const cellClassNames = function () {
+//     let classNames = ['number-cell'];
+//     isNew && classNames.push('cell-new');
+//     isMerged && classNames.push('cell-newMerge');
+//     return classNames.join(' ');
+//   };
+
+//   const numberStyle = {
+//     backgroundColor: cellBackgroundColor(value),
+//     color: cellColor(value),
+//     fontSize: cellFontSize(value),
+//     top: getPosition(rowIndex),
+//     left: getPosition(colIndex),
+//   };
+
+//   return (
+//     <div className={cellClassNames()} style={numberStyle} ref={cellRef}>
+//       {value === 0 ? '' : value}
+//     </div>
+//   );
+// }
+
+class NumberCell extends React.Component {
+  componentDidMount() {
+    let { position } = this.props;
+    let node = ReactDOM.findDOMNode(this);
+    // let node = this.cellRef.current;
+    let left = this.numCellPos(position.colIndex);
+    let top = this.numCellPos(position.rowIndex);
+    animationFunc(node, top, 'top');
+    animationFunc(node, left, 'left');
+  }
+  numCellPos(pos) {
+    var targetPos = getPosition(pos);
+    return targetPos;
+  }
+
+  cellClassNames() {
     let classNames = ['number-cell'];
+    let { isMerged, isNew } = this.props.statusBoard;
     isNew && classNames.push('cell-new');
     isMerged && classNames.push('cell-newMerge');
     return classNames.join(' ');
-  };
-
-  const numberStyle = {
-    backgroundColor: cellBackgroundColor(value),
-    color: cellColor(value),
-    fontSize: cellFontSize(value),
-    top: getPosition(rowIndex),
-    left: getPosition(colIndex),
-  };
-
-  return (
-    <div className={cellClassNames()} style={numberStyle} ref={cellRef}>
-      {value === 0 ? '' : value}
-    </div>
-  );
+  }
+  render() {
+    let {
+      value,
+      position: { rowIndex, colIndex },
+    } = this.props;
+    const numberStyle = {
+      backgroundColor: cellBackgroundColor(value),
+      color: cellColor(value),
+      fontSize: cellFontSize(value),
+      top: getPosition(rowIndex),
+      left: getPosition(colIndex),
+    };
+    return (
+      <div className={this.cellClassNames()} style={numberStyle}>
+        {value === 0 ? '' : value}
+      </div>
+    );
+  }
 }
 
 export default GridContainer;

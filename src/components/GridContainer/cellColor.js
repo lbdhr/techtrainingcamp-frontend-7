@@ -5,7 +5,6 @@ export function animationFunc(node, target, direction) {
     let speed = (target - parseInt(node.style[direction])) / 5;
     speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
     node.style[direction] = parseInt(node.style[direction]) + speed + 'px';
-    console.log(1);
     if (parseInt(node.style[direction]) === target) {
       clearInterval(timer);
     }
