@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { ActionCreators } from 'redux-undo';
 import { reset, addRandom } from '../../reducers/gameReducer';
-import Button from './Button';
+import GameSettingBtn from './GameSettingBtn';
 
 const mapStateToProps = state => ({
   board: state.present.gameReducer.board,
@@ -16,4 +16,4 @@ const mapDispatchToProps = {
   onAddRandom: addRandom,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Button);
+export default connect(mapStateToProps, mapDispatchToProps)(GameSettingBtn);

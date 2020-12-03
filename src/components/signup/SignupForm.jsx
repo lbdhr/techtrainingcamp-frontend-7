@@ -35,7 +35,7 @@ class SignupForm extends React.Component{
                     text:"注册成功，欢迎你的加入!"
                 })
                 // history不存在
-                this.props.history.push("/")
+                this.props.history.push("/login")
             },
             ({ response }) => { this.setState({ errors:response.data,isLoading:false }) }
         )

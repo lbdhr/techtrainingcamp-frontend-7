@@ -5,7 +5,6 @@ export function animationFunc(node, target, direction) {
     let speed = (target - parseInt(node.style[direction])) / 5;
     speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
     node.style[direction] = parseInt(node.style[direction]) + speed + 'px';
-    console.log(1);
     if (parseInt(node.style[direction]) === target) {
       clearInterval(timer);
     }
@@ -14,6 +13,8 @@ export function animationFunc(node, target, direction) {
 
 export const cellBackgroundColor = number => {
   switch (number) {
+    case 0:
+      return 'rgb(93, 172, 129)';
     case 2:
       return '#eee4da';
     case 4:

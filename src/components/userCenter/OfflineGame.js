@@ -1,13 +1,29 @@
 import React from 'react';
 import Main from '../../pages/Main';
+import { connect } from 'react-redux';
 
-export default class OfflineGame extends React.Component {
+class OfflineGame extends React.Component {
+
   render() {
+
+    const detailsToMain = {
+      username: this.props.username,
+      mode: "offline",
+    };
+
     return (
       <div className="jumbotron">
         {/*<p>单机模式！！！</p>*/}
-          <Main />
+          <Main detailsToMain={detailsToMain}/>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    username: state.present.auth.user.username,
+  }
+}
+
+export default connect(mapStateToProps, null)(OfflineGame)
