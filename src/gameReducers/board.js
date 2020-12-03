@@ -48,7 +48,7 @@ export default class Board {
     );
   };
   // 生成随机数
-  addRandomToBoard = () => {
+  addRandomToBoard = mode => {
     const { board } = this;
     const newBoard = JSON.parse(JSON.stringify(board));
     // 1.如果游戏结束，直接返回原board
@@ -78,7 +78,20 @@ export default class Board {
       randx = parseInt(Math.floor(Math.random() * newBoard.length));
       randy = parseInt(Math.floor(Math.random() * newBoard.length));
     }
-    let randNumber = Math.random() < 0.5 ? 2 : 4;
+    // 加入阻挡墙模式
+    let randNumber;
+    if (mode && mode === 'block') {
+      let tmp = Math.random();
+      if (tmp < 0.1) {
+        randNumber = 0;
+      } else if (tmp < 0.45 && tmp >= 0.1) {
+        randNumber = 2;
+      } else {
+        randNumber = 4;
+      }
+    } else {
+      randNumber = Math.random() < 0.5 ? 2 : 4;
+    }
     newBoard[randx][randy] = randNumber;
     this.statusBoard[randx][randy]['isNew'] = true;
     this.board = newBoard;

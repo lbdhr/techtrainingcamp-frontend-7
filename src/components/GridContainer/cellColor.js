@@ -13,6 +13,8 @@ export function animationFunc(node, target, direction) {
 
 export const cellBackgroundColor = number => {
   switch (number) {
+    case 0:
+      return 'rgb(93, 172, 129)';
     case 2:
       return '#eee4da';
     case 4:

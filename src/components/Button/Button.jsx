@@ -12,7 +12,7 @@ export default function Button(props) {
   const handleMode = () => {
     timer = setInterval(function () {
       if (props.gameOver) clearInterval(timer);
-      props.onAddRandom();
+      props.onAddRandom('block');
     }, 1000);
   };
   const clearMode = () => {
