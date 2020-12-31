@@ -23,13 +23,7 @@ function handleError() {
         // 如果是自动断开，自动重连
         console.info('如果是连接断开，则自动重连');
         if(err.code === 'PROTOCOL_CONNECTION_LOST') {
-            client.connect(function(err) {
-                if (err) {
-                    console.error('error connecting: ' + err.stack);
-                    return;
-                }
-                console.log('connected as id ' + client.threadId);
-            });
+            handleError();
         } else {throw err;}
     });
 }
